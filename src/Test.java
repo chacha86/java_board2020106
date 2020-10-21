@@ -6,9 +6,6 @@ public class Test {
 	public static void main(String[] args) {
 
 		Scanner sc = new Scanner(System.in);
-		ArrayList<Integer> ids = new ArrayList<>();
-		ArrayList<String> titles = new ArrayList<>();
-		ArrayList<String> bodies = new ArrayList<>();
 		ArrayList<Article> articles = new ArrayList<>();
 
 		int no = 1;
@@ -23,29 +20,27 @@ public class Test {
 			if (cmd.equals("add")) {
 				
 				Article a = new Article();
-				
-				a.id = no;
-				
-				ids.add(no);
+			
+				a.setId(no);
 				no++;
 				System.out.println("게시물 제목을 입력해주세요 :");
 				String title = sc.next();
-				a.title = title;
-				titles.add(title);
+				a.setTitle(title);
+
 				System.out.println("게시물 내용을 입력해주세요 :");
 				String body = sc.next();
-				a.body = body;
-				bodies.add(body);
+				a.setBody(body);
 				
 				articles.add(a);
 				System.out.println("게시물이 등록되었습니다.");
 
 			}
 			if (cmd.equals("list")) {
-				for (int i = 0; i < ids.size(); i++) {
-					System.out.println("번호 : " + ids.get(i));
-					System.out.println("제목 : " + titles.get(i));
-					System.out.println("내용 : " + bodies.get(i));
+				for (int i = 0; i < articles.size(); i++) {
+					Article article = articles.get(i);
+					System.out.println("번호 : " + article.getId());
+					System.out.println("제목 : " + article.getTitle());
+					System.out.println("내용 : " + article.getBody());
 					System.out.println("===================");
 				}
 
@@ -55,8 +50,13 @@ public class Test {
 				System.out.println("수정할 게시물 선택 : ");
 				int targetId = sc.nextInt();
 
-				for (int i = 0; i < ids.size(); i++) {
-					int id = ids.get(i);
+				for (int i = 0; i < articles.size(); i++) {
+					
+//					Article article = articles.get(i);
+//					int id = article.getId();
+					
+					int id = articles.get(i).getId();
+					
 					if (id == targetId) {
 						System.out.println("게시물 제목을 입력해주세요 :");
 						String newTitle = sc.next();
@@ -64,8 +64,12 @@ public class Test {
 						System.out.println("게시물 내용을 입력해주세요 :");
 						String newBody = sc.next();
 
-						titles.set(i, newTitle);
-						bodies.set(i, newBody);
+						Article newArticle = new Article();
+						newArticle.setId(id);
+						newArticle.setTitle(newTitle);
+						newArticle.setBody(newBody);
+						
+						articles.set(i, newArticle);
 						break;
 					}
 				}
@@ -75,13 +79,11 @@ public class Test {
 				int targetId = sc.nextInt();
 				int existFlag = 2;// 1. 있음 2. 없음
 				
-				for (int i = 0; i < ids.size(); i++) {
-					int id = ids.get(i);
+				for (int i = 0; i < articles.size(); i++) {
+					int id = articles.get(i).getId();
 					if (id == targetId) {
 						existFlag = 1;
-						ids.remove(i);
-						titles.remove(i);
-						bodies.remove(i);
+						articles.remove(i);
 						break;
 					} 
 				}
