@@ -1,4 +1,6 @@
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Scanner;
 
 public class Test {
@@ -8,10 +10,11 @@ public class Test {
 	public static void main(String[] args) {
 
 		Scanner sc = new Scanner(System.in);
+		
 		articles = new ArrayList<>();
-		Article a1 = new Article(1, "제목1", "내용1");
-		Article a2 = new Article(2, "제목2", "내용2");
-		Article a3 = new Article(3, "제목3", "내용3");
+		Article a1 = new Article(1, "제목1", "내용1", "익명", getCurrentDate());
+		Article a2 = new Article(2, "제목2", "내용2", "익명", getCurrentDate());
+		Article a3 = new Article(3, "제목3", "내용3", "익명", getCurrentDate());
 
 		articles.add(a1);
 		articles.add(a2);
@@ -29,7 +32,7 @@ public class Test {
 			if (cmd.equals("add")) {
 
 				Article a = new Article();
-
+				
 				a.setId(no);
 				no++;
 				System.out.println("게시물 제목을 입력해주세요 :");
@@ -40,6 +43,9 @@ public class Test {
 				String body = sc.next();
 				a.setBody(body);
 
+				a.setRegDate(getCurrentDate());
+				a.setNickname("익명");
+				
 				articles.add(a);
 				System.out.println("게시물이 등록되었습니다.");
 
@@ -49,6 +55,9 @@ public class Test {
 					Article article = articles.get(i);
 					System.out.println("번호 : " + article.getId());
 					System.out.println("제목 : " + article.getTitle());
+					System.out.println("등록날짜 : " + article.getRegDate());
+					System.out.println("작성자 : " + article.getNickname());
+					System.out.println("조회수 : " + article.getHit());
 					System.out.println("===================");
 				}
 
@@ -103,12 +112,13 @@ public class Test {
 				}
 			}
 			if (cmd.equals("read")) {
-				System.out.println("삭제할 게시물 선택 : ");
+				System.out.println("상세보기할 게시물 선택 : ");
 				int targetId = sc.nextInt();
 				Article target = getArticleById(targetId);
 				if (target == null) {
 					System.out.println("게시물이 존재하지 않습니다.");
 				} else {
+					target.setHit(target.getHit() + 1);
 					System.out.println("==== " + target.getId() + " ====");
 					System.out.println("번호 : " + target.getId());
 					System.out.println("제목 : " + target.getTitle());
@@ -140,5 +150,13 @@ public class Test {
 		}
 
 		return null;
+	}
+	
+	private static String getCurrentDate() {
+		SimpleDateFormat format1 = new SimpleDateFormat ( "yyyy.MM.dd");
+		Date time = new Date();
+		String time1 = format1.format(time);
+		
+		return time1;
 	}
 }

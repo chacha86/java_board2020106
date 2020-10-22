@@ -1,19 +1,11 @@
-import java.util.ArrayList;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class Test2 {
-	public static void main(String[] args) {
-		
-		ArrayList<String> strings = new ArrayList<>();
-		
-		strings.add("aaa");
-		strings.add("bbb");
-		strings.add("aaa");
-		strings.add("ccc");
-		strings.add("aaa");
-	
-		
-		
-		
-		
+	public static void main(String[] args) {		
+		SimpleDateFormat format1 = new SimpleDateFormat ( "yyyy.MM.dd");
+		Date time = new Date();
+		String time1 = format1.format(time);
+		System.out.println(time1);
 	}
 }
