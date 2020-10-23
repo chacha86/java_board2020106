@@ -9,9 +9,9 @@ public class ArticleDao {
 
 	public ArticleDao() {
 		articles = new ArrayList<>();
-		Article a1 = new Article(1, "제목1", "내용1", "익명", getCurrentDate());
-		Article a2 = new Article(2, "제목2", "내용2", "익명", getCurrentDate());
-		Article a3 = new Article(3, "제목3", "내용3", "익명", getCurrentDate());
+		Article a1 = new Article(1, "안녕하세요", "내용1", "익명", getCurrentDate());
+		Article a2 = new Article(2, "반갑습니다.", "내용2", "익명", getCurrentDate());
+		Article a3 = new Article(3, "안녕", "내용3", "익명", getCurrentDate());
 
 		articles.add(a1);
 		articles.add(a2);
@@ -38,6 +38,22 @@ public class ArticleDao {
 		return time1;
 	}
 
+	public ArrayList<Article> getSearchedArticlesByTitle(String keyword) {
+		
+		ArrayList<Article> searchedArticles = new ArrayList<>();
+		
+		for(int i = 0; i < articles.size(); i++) {
+			Article article = articles.get(i);
+			String str = article.getTitle(); // 각 게시물 제목
+			if (str.contains(keyword)) {
+				searchedArticles.add(article);
+			}
+		}
+		
+		return searchedArticles;
+		
+	}
+	
 	// Article 버전
 	public static Article getArticleById(int targetId) {
 		for (int i = 0; i < articles.size(); i++) {
