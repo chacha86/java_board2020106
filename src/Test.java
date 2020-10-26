@@ -82,12 +82,32 @@ public class Test {
 					System.out.println("제목 : " + target.getTitle());
 					System.out.println("내용 : " + target.getBody());
 					System.out.println("===============");
+					
+					while(true) {
+						System.out.println("상세보기 기능을 선택해주세요(1. 댓글 등록, 2. 좋아요, 3. 수정, 4. 삭제, 5. 목록으로) :");
+						int readCmd = sc.nextInt();
+						if(readCmd == 1) {
+							System.out.println("댓글 기능");
+						} else if(readCmd == 2) {
+							System.out.println("좋아요 기능");
+						} else if(readCmd == 3) {
+							System.out.println("수정 기능");
+						} else if(readCmd == 4) {
+							System.out.println("삭제 기능");
+						} else if(readCmd == 5) {
+							break;
+						}
+					}
 				}
 			}
 			if (cmd.equals("search")) {
+				System.out.println("검색 항목을 (1. 제목, 2. 내용, 3. 제목 + 내용, 4. 작성자) : ");
+				int flag = sc.nextInt();
 				System.out.println("검색 키워드를 입력해주세요 : ");
 				String keyword = sc.next();
-				ArrayList<Article> searchedArticles = dao.getSearchedArticlesByTitle(keyword);
+				ArrayList<Article> searchedArticles;
+
+				searchedArticles = dao.getSearchedArticlesByFlag(flag, keyword);					
 				
 				printArticles(searchedArticles);
 			}

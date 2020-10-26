@@ -4,7 +4,6 @@ public class Test2 {
 		//게시물 제목
 		String str = "사과(apple) 가격은 개당 1,000원 입니다.";
 
-		
 		System.out.println(str.contains("aaa")); 
 		// contains 사용
 		if (str.contains("aaa")) {// 검색키워드와 비교

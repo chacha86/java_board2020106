@@ -63,5 +63,19 @@ public class Article {
 	public void setNickname(String nickname) {
 		this.nickname = nickname;
 	}
-
+	
+	public String getPropertiesByFlag(int flag) {
+		String str = "";
+		if(flag == 1) {
+			 str = this.getTitle(); 
+		} else if(flag == 2) {
+			str = this.getBody();
+		} else if(flag == 3) {
+			str = this.getTitle() + this.getBody(); 
+		} else {
+			str = this.getNickname();
+		}
+		
+		return str;
+	}
 }
