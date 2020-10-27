@@ -6,8 +6,10 @@ public class Test {
 	public static void main(String[] args) {
 
 		Scanner sc = new Scanner(System.in);
-		ArticleDao dao = new ArticleDao();
-
+		ArticleDao articleDao = new ArticleDao();
+		ReplyDao replyDao = new ReplyDao();
+		
+		
 		while (true) {
 			System.out.print("명령어 입력 : ");
 			String cmd = sc.next();
@@ -28,12 +30,12 @@ public class Test {
 				a.setBody(body);
 				a.setNickname("익명");
 
-				dao.insertArticle(a);
+				articleDao.insertArticle(a);
 				System.out.println("게시물이 등록되었습니다.");
 
 			}
 			if (cmd.equals("list")) {
-				ArrayList<Article> articles = dao.getArticles();
+				ArrayList<Article> articles = articleDao.getArticles();
 
 				printArticles(articles);
 
@@ -42,7 +44,7 @@ public class Test {
 
 				System.out.println("수정할 게시물 선택 : ");
 				int targetId = sc.nextInt();
-				Article target = dao.getArticleById(targetId);
+				Article target = articleDao.getArticleById(targetId);
 				if (target == null) {
 					System.out.println("없는 게시물입니다.");
 				} else {
@@ -59,20 +61,20 @@ public class Test {
 				}
 			}
 			if (cmd.equals("delete")) {
-				ArrayList<Article> articles = dao.getArticles();
+				ArrayList<Article> articles = articleDao.getArticles();
 				System.out.println("삭제할 게시물 선택 : ");
 				int targetId = sc.nextInt();
-				Article target = dao.getArticleById(targetId);
+				Article target = articleDao.getArticleById(targetId);
 				if (target == null) {
 					System.out.println("게시물이 존재하지 않습니다.");
 				} else {
-					dao.removeArticle(target);
+					articleDao.removeArticle(target);
 				}
 			}
 			if (cmd.equals("read")) {
 				System.out.println("상세보기할 게시물 선택 : ");
 				int targetId = sc.nextInt();
-				Article target = dao.getArticleById(targetId);
+				Article target = articleDao.getArticleById(targetId);
 				if (target == null) {
 					System.out.println("게시물이 존재하지 않습니다.");
 				} else {
@@ -82,12 +84,33 @@ public class Test {
 					System.out.println("제목 : " + target.getTitle());
 					System.out.println("내용 : " + target.getBody());
 					System.out.println("===============");
+					System.out.println("================댓글==============");
+					ArrayList<Reply> replies = replyDao.getRepliesByParentId(target.getId());
+					printReplies(replies);
 					
 					while(true) {
 						System.out.println("상세보기 기능을 선택해주세요(1. 댓글 등록, 2. 좋아요, 3. 수정, 4. 삭제, 5. 목록으로) :");
 						int readCmd = sc.nextInt();
 						if(readCmd == 1) {
-							System.out.println("댓글 기능");
+							Reply r = new Reply();
+
+							System.out.println("댓글 내용을 입력해주세요:");
+							String body = sc.next();
+							r.setParentId(target.getId());
+							r.setBody(body);
+							r.setNickname("익명");
+
+							replyDao.insertReply(r);
+							System.out.println("댓글이 등록되었습니다.");
+							System.out.println("==== " + target.getId() + " ====");
+							System.out.println("번호 : " + target.getId());
+							System.out.println("제목 : " + target.getTitle());
+							System.out.println("내용 : " + target.getBody());
+							System.out.println("===============");
+							System.out.println("================댓글==============");
+							ArrayList<Reply> replies2 = replyDao.getRepliesByParentId(target.getId());
+							printReplies(replies2);
+							 
 						} else if(readCmd == 2) {
 							System.out.println("좋아요 기능");
 						} else if(readCmd == 3) {
@@ -107,7 +130,7 @@ public class Test {
 				String keyword = sc.next();
 				ArrayList<Article> searchedArticles;
 
-				searchedArticles = dao.getSearchedArticlesByFlag(flag, keyword);					
+				searchedArticles = articleDao.getSearchedArticlesByFlag(flag, keyword);					
 				
 				printArticles(searchedArticles);
 			}
@@ -121,6 +144,16 @@ public class Test {
 			System.out.println("등록날짜 : " + article.getRegDate());
 			System.out.println("작성자 : " + article.getNickname());
 			System.out.println("조회수 : " + article.getHit());
+			System.out.println("===================");
+		}
+	}
+	
+	private static void printReplies(ArrayList<Reply> replyList) {
+		for (int i = 0; i < replyList.size(); i++) {
+			Reply reply = replyList.get(i);
+			System.out.println("내용 : " + reply.getBody());
+			System.out.println("작성자 : " + reply.getNickname());
+			System.out.println("등록날짜 : " + reply.getRegDate());
 			System.out.println("===================");
 		}
 	}
