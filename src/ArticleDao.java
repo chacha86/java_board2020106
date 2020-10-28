@@ -4,7 +4,7 @@ import java.util.Date;
 
 public class ArticleDao {
 
-	private static ArrayList<Article> articles;
+	private ArrayList<Article> articles;
 	private int no = 4;
 
 	public ArticleDao() {
@@ -55,7 +55,7 @@ public class ArticleDao {
 	}
 
 	// Article 버전
-	public static Article getArticleById(int targetId) {
+	public Article getArticleById(int targetId) {
 		for (int i = 0; i < articles.size(); i++) {
 			int id = articles.get(i).getId();
 			if (id == targetId) {

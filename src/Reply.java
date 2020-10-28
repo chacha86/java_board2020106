@@ -1,10 +1,12 @@
 
 public class Reply {
+	
 	private int id;
 	private int parentId;
 	private String body;
 	private String nickname;
 	private String regDate;
+	
 	public int getId() {
 		return id;
 	}

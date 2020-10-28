@@ -3,7 +3,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class ReplyDao {
-	private static ArrayList<Reply> replies;
+	private ArrayList<Reply> replies;
 	private int no = 1;
 
 	public ReplyDao() {
@@ -22,7 +22,6 @@ public class ReplyDao {
 		a.setId(no);
 		no++;
 		a.setRegDate(getCurrentDate());
-
 		replies.add(a);
 	}
 //
@@ -71,6 +70,7 @@ public class ReplyDao {
 	}
 	
 	public ArrayList<Reply> getRepliesByParentId(int parentId) {
+			
 		ArrayList<Reply> searchedReplies = new ArrayList<>();
 		for (int i = 0; i < replies.size(); i++) {
 			Reply reply = replies.get(i);
@@ -78,7 +78,7 @@ public class ReplyDao {
 				searchedReplies.add(reply);
 			}
 		}
-		return replies;
+		return searchedReplies;
 	} 
 	
 //

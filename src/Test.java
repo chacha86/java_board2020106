@@ -2,13 +2,13 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Test {
-
+	
+	static ReplyDao replyDao = new ReplyDao();
+	static ArticleDao articleDao = new ArticleDao();
+	
 	public static void main(String[] args) {
 
 		Scanner sc = new Scanner(System.in);
-		ArticleDao articleDao = new ArticleDao();
-		ReplyDao replyDao = new ReplyDao();
-		
 		
 		while (true) {
 			System.out.print("명령어 입력 : ");
@@ -79,14 +79,7 @@ public class Test {
 					System.out.println("게시물이 존재하지 않습니다.");
 				} else {
 					target.setHit(target.getHit() + 1);
-					System.out.println("==== " + target.getId() + " ====");
-					System.out.println("번호 : " + target.getId());
-					System.out.println("제목 : " + target.getTitle());
-					System.out.println("내용 : " + target.getBody());
-					System.out.println("===============");
-					System.out.println("================댓글==============");
-					ArrayList<Reply> replies = replyDao.getRepliesByParentId(target.getId());
-					printReplies(replies);
+					printArticle(target);
 					
 					while(true) {
 						System.out.println("상세보기 기능을 선택해주세요(1. 댓글 등록, 2. 좋아요, 3. 수정, 4. 삭제, 5. 목록으로) :");
@@ -102,14 +95,7 @@ public class Test {
 
 							replyDao.insertReply(r);
 							System.out.println("댓글이 등록되었습니다.");
-							System.out.println("==== " + target.getId() + " ====");
-							System.out.println("번호 : " + target.getId());
-							System.out.println("제목 : " + target.getTitle());
-							System.out.println("내용 : " + target.getBody());
-							System.out.println("===============");
-							System.out.println("================댓글==============");
-							ArrayList<Reply> replies2 = replyDao.getRepliesByParentId(target.getId());
-							printReplies(replies2);
+							printArticle(target);
 							 
 						} else if(readCmd == 2) {
 							System.out.println("좋아요 기능");
@@ -156,6 +142,20 @@ public class Test {
 			System.out.println("등록날짜 : " + reply.getRegDate());
 			System.out.println("===================");
 		}
+	}
+	
+	private static void printArticle(Article target) {
+		System.out.println("==== " + target.getId() + " ====");
+		System.out.println("번호 : " + target.getId());
+		System.out.println("제목 : " + target.getTitle());
+		System.out.println("내용 : " + target.getBody());
+		System.out.println("등록날짜 : " + target.getRegDate());
+		System.out.println("조회수 : " + target.getHit());
+		System.out.println("===============");
+		System.out.println("================댓글==============");
+
+		ArrayList<Reply> replies = replyDao.getRepliesByParentId(target.getId());
+		printReplies(replies);
 	}
 
 }
