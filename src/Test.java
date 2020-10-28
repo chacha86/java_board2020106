@@ -2,14 +2,15 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Test {
-	
+
+	static MemberDao memberDao = new MemberDao();
 	static ReplyDao replyDao = new ReplyDao();
 	static ArticleDao articleDao = new ArticleDao();
-	
+
 	public static void main(String[] args) {
 
 		Scanner sc = new Scanner(System.in);
-		
+
 		while (true) {
 			System.out.print("명령어 입력 : ");
 			String cmd = sc.next();
@@ -80,11 +81,11 @@ public class Test {
 				} else {
 					target.setHit(target.getHit() + 1);
 					printArticle(target);
-					
-					while(true) {
+
+					while (true) {
 						System.out.println("상세보기 기능을 선택해주세요(1. 댓글 등록, 2. 좋아요, 3. 수정, 4. 삭제, 5. 목록으로) :");
 						int readCmd = sc.nextInt();
-						if(readCmd == 1) {
+						if (readCmd == 1) {
 							Reply r = new Reply();
 
 							System.out.println("댓글 내용을 입력해주세요:");
@@ -96,14 +97,14 @@ public class Test {
 							replyDao.insertReply(r);
 							System.out.println("댓글이 등록되었습니다.");
 							printArticle(target);
-							 
-						} else if(readCmd == 2) {
+
+						} else if (readCmd == 2) {
 							System.out.println("좋아요 기능");
-						} else if(readCmd == 3) {
+						} else if (readCmd == 3) {
 							System.out.println("수정 기능");
-						} else if(readCmd == 4) {
+						} else if (readCmd == 4) {
 							System.out.println("삭제 기능");
-						} else if(readCmd == 5) {
+						} else if (readCmd == 5) {
 							break;
 						}
 					}
@@ -116,12 +117,32 @@ public class Test {
 				String keyword = sc.next();
 				ArrayList<Article> searchedArticles;
 
-				searchedArticles = articleDao.getSearchedArticlesByFlag(flag, keyword);					
-				
+				searchedArticles = articleDao.getSearchedArticlesByFlag(flag, keyword);
+
 				printArticles(searchedArticles);
 			}
-		}	
+			if (cmd.equals("signup")) {
+				System.out.println("======== 회원가입을 진행합니다.========");
+				Member m = new Member();
+
+				System.out.println("아이디를 입력해주세요 :");
+				String id = sc.next();
+				m.setLoginId(id);
+
+				System.out.println("비밀번호를 입력해주세요 :");
+				String pw = sc.next();
+				m.setLoginPw(pw);
+				
+				System.out.println("닉네임을 입력해주세요 :");
+				String nick = sc.next();
+				m.setNickname(nick);
+				
+				memberDao.insertMember(m);
+				System.out.println("======== 회원가입이 완료되었습니다.========");
+			}
+		}
 	}
+
 	private static void printArticles(ArrayList<Article> articleList) {
 		for (int i = 0; i < articleList.size(); i++) {
 			Article article = articleList.get(i);
@@ -133,7 +154,7 @@ public class Test {
 			System.out.println("===================");
 		}
 	}
-	
+
 	private static void printReplies(ArrayList<Reply> replyList) {
 		for (int i = 0; i < replyList.size(); i++) {
 			Reply reply = replyList.get(i);
@@ -143,7 +164,7 @@ public class Test {
 			System.out.println("===================");
 		}
 	}
-	
+
 	private static void printArticle(Article target) {
 		System.out.println("==== " + target.getId() + " ====");
 		System.out.println("번호 : " + target.getId());
