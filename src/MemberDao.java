@@ -32,4 +32,17 @@ public class MemberDao {
 
 		return time1;
 	}
+
+	public Member getMemberByLoginIdAndLoginPw(String id, String pw) {
+		
+		for(int i = 0; i < members.size(); i++) {
+			Member m = members.get(i);
+			if(m.getLoginId().equals(id) && m.getLoginPw().equals(pw)) {
+				return m;
+			}
+		}
+		
+		return null;
+		
+	}
 }

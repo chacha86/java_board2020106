@@ -10,9 +10,14 @@ public class Test {
 	public static void main(String[] args) {
 
 		Scanner sc = new Scanner(System.in);
-
+		Member loginedMember = null;
+		
 		while (true) {
-			System.out.print("명령어 입력 : ");
+			if(loginedMember == null) {				
+				System.out.print("명령어 입력 : ");
+			} else {
+				System.out.println("명령어 입력[" + loginedMember.getLoginId() + "(" +loginedMember.getNickname()+ ")" + "] : ");
+			}
 			String cmd = sc.next();
 			if (cmd.equals("exit")) {
 				System.out.println("종료");
@@ -139,6 +144,22 @@ public class Test {
 				
 				memberDao.insertMember(m);
 				System.out.println("======== 회원가입이 완료되었습니다.========");
+			} 
+			if(cmd.equals("signin")) {
+				System.out.println("아이디 :");
+				String id = sc.next();
+
+				System.out.println("비밀번호 :");
+				String pw = sc.next();
+				
+				Member member = memberDao.getMemberByLoginIdAndLoginPw(id, pw);
+				if(member == null) {
+					System.out.println("비밀번호를 틀렸거나 잘못된 회원정보입니다.");
+				} else {
+					loginedMember = member;
+					System.out.println(loginedMember.getNickname() + "님 안녕하세요!!");
+				}
+				
 			}
 		}
 	}

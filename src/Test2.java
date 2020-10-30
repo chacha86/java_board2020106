@@ -1,18 +1,19 @@
+import java.util.Scanner;
+
 public class Test2 {
 	public static void main(String[] args) {
+
+		Scanner sc = new Scanner(System.in);		 
 		
-		//게시물 제목
-		String str = "사과(apple) 가격은 개당 1,000원 입니다.";
+		String cmd = sc.nextLine();
+		System.out.println(cmd);
+		
+		int a = Integer.parseInt("123");
+		
+		System.out.println(a + 10);
 
-		System.out.println(str.contains("aaa")); 
-		// contains 사용
-		if (str.contains("aaa")) {// 검색키워드와 비교
-			System.out.println("contain - 포함");
-		} else {
-			System.out.println("contain - 미포함");
-		}
+		String cmd2 = sc.nextLine();
+		System.out.println(cmd2);
 
-		System.out.println(str.contains("APPLE")); // false
-		System.out.println(str.contains("apple")); // true
 	}
 }
