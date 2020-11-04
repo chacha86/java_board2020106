@@ -6,6 +6,7 @@ public class App {
 	MemberDao memberDao = new MemberDao();
 	ReplyDao replyDao = new ReplyDao();
 	ArticleDao articleDao = new ArticleDao();
+	LikeDao likeDao = new LikeDao();
 	Member loginedMember = null;
 	
 	public void start() {
@@ -114,7 +115,25 @@ public class App {
 							printArticle(target);
 
 						} else if (readCmd == 2) {
-							System.out.println("좋아요 기능");
+							
+							if (!isLogin()) {
+								continue;
+							}
+							
+							Like rst = likeDao.getLikeByArticleIdAndMemberId(target.getId(), loginedMember.getId());
+							
+							if(rst == null) {
+								Like like = new Like(target.getId(), loginedMember.getId());
+								likeDao.insertLike(like);
+								System.out.println("좋아요를 체크했습니다.");
+							} else {
+								// 해제 - 삭제
+								likeDao.removeLike(rst);
+								System.out.println("좋아요를 해제했습니다.");
+							}
+							
+							printArticle(target);
+							
 						} else if (readCmd == 3) {
 							
 							if(!isLogin() || !isMyArticle(target)) {
@@ -215,6 +234,9 @@ public class App {
 			Member regMember = memberDao.getMemberById(article.getMid());
 			System.out.println("작성자 : " + regMember.getNickname());
 			System.out.println("조회수 : " + article.getHit());
+			
+			int likeCnt = likeDao.getLikeCount(article.getId());
+			System.out.println("좋아요 : " + likeCnt);
 			System.out.println("===================");
 		}
 	}
@@ -238,6 +260,10 @@ public class App {
 		System.out.println("작성자 : " + regMember.getNickname());
 		System.out.println("등록날짜 : " + target.getRegDate());
 		System.out.println("조회수 : " + target.getHit());
+		
+		int likeCnt = likeDao.getLikeCount(target.getId());
+		
+		System.out.println("좋아요 : " + likeCnt);
 		System.out.println("===============");
 		System.out.println("================댓글==============");
 

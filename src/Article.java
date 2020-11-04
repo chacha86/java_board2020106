@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 
 public class Article {
 	
@@ -7,7 +8,7 @@ public class Article {
 	private String regDate;
 	private int mid;
 	private int hit;
-	
+
 	
 	public Article() {
 		

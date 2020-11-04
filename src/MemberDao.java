@@ -8,9 +8,9 @@ public class MemberDao {
 
 	public MemberDao() {
 		members = new ArrayList<>();
-		Member m1 = new Member(1, "hong123", "h1234", "홍길동", getCurrentDate());
-		Member m2 = new Member(2, "lee123", "l1234", "이순신", getCurrentDate());
-		Member m3 = new Member(3, "kim123", "k1234", "김서방", getCurrentDate());
+		Member m1 = new Member(1, "hong123", "h1234", "홍길동", Util.getCurrentDate());
+		Member m2 = new Member(2, "lee123", "l1234", "이순신", Util.getCurrentDate());
+		Member m3 = new Member(3, "kim123", "k1234", "김서방", Util.getCurrentDate());
 
 		members.add(m1);
 		members.add(m2);
@@ -20,17 +20,9 @@ public class MemberDao {
 	public void insertMember(Member m) {
 		m.setId(no);
 		no++;
-		m.setRegDate(getCurrentDate());
+		m.setRegDate(Util.getCurrentDate());
 
 		members.add(m);
-	}
-
-	private static String getCurrentDate() {
-		SimpleDateFormat format1 = new SimpleDateFormat("yyyy.MM.dd");
-		Date time = new Date();
-		String time1 = format1.format(time);
-
-		return time1;
 	}
 	
 	public Member getMemberById(int id) {
