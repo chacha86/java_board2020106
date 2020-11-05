@@ -1,5 +1,3 @@
-import java.util.ArrayList;
-
 public class Article {
 	
 	private int id;
@@ -8,18 +6,18 @@ public class Article {
 	private String regDate;
 	private int mid;
 	private int hit;
-
 	
 	public Article() {
 		
 	}
 	
-	public Article(int id, String title, String body, int mid, String regDate) {
+	public Article(int id, String title, String body, int mid, String regDate, int hit) {
 		this.id = id;
 		this.title = title;
 		this.body = body;
 		this.regDate = regDate;
 		this.mid = mid;
+		this.hit = hit;
 	}
 	
 	public int getId() {
