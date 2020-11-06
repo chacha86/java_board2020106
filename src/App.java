@@ -127,11 +127,14 @@ public class App {
 							if(rst == null) {
 								Like like = new Like(target.getId(), loginedMember.getId());
 								likeDao.insertLike(like);
+								target.setLikeCnt(target.getLikeCnt() + 1);
+								
 								System.out.println("좋아요를 체크했습니다.");
 							} else {
 								// 해제 - 삭제
 								likeDao.removeLike(rst);
 								System.out.println("좋아요를 해제했습니다.");
+								target.setLikeCnt(target.getLikeCnt() - 1);
 							}
 							
 							printArticle(target);
@@ -185,7 +188,8 @@ public class App {
 				System.out.println("정렬 방법을 선택해주세요. (asc : 오름차순,  desc : 내림차순) :");
 				String sortOrder= sc.nextLine();
 				MyComparator comp = new MyComparator();
-				comp.sortOrder = sortOrder; 
+				comp.sortOrder = sortOrder;
+				comp.sortType = sortType; 
 				// 조회수로 오름차순
 				ArrayList<Article> articles = articleDao.getArticles();				
 				Collections.sort(articles, comp);
@@ -251,9 +255,7 @@ public class App {
 			Member regMember = memberDao.getMemberById(article.getMid());
 			System.out.println("작성자 : " + regMember.getNickname());
 			System.out.println("조회수 : " + article.getHit());
-			
-			int likeCnt = likeDao.getLikeCount(article.getId());
-			System.out.println("좋아요 : " + likeCnt);
+			System.out.println("좋아요 : " + article.getLikeCnt());
 			System.out.println("===================");
 		}
 	}
@@ -277,10 +279,7 @@ public class App {
 		System.out.println("작성자 : " + regMember.getNickname());
 		System.out.println("등록날짜 : " + target.getRegDate());
 		System.out.println("조회수 : " + target.getHit());
-		
-		int likeCnt = likeDao.getLikeCount(target.getId());
-		
-		System.out.println("좋아요 : " + likeCnt);
+		System.out.println("좋아요 : " + target.getLikeCnt());
 		System.out.println("===============");
 		System.out.println("================댓글==============");
 
@@ -312,12 +311,21 @@ class MyComparator implements Comparator<Article> {
 
 	String sortOrder = "asc";
 	String sortType = "hit";
+	LikeDao likeDao = new LikeDao();
 	
 	@Override
 	public int compare(Article o1, Article o2) {
-		int c1 = o1.getHit();
-		int c2 = o2.getHit();
+		int c1 = 0; 
+		int c2 = 0;
 		
+		if(sortType.equals("hit")) {
+			c1 = o1.getHit();
+			c2 = o2.getHit();
+		} else if(sortType.equals("like")){
+			c1 = o1.getLikeCnt();
+			c2 = o2.getLikeCnt();
+		}
+	
 		if(sortOrder.equals("asc")) {
 			if(c1 > c2) {
 				return 1;

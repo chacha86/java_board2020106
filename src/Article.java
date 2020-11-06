@@ -6,20 +6,30 @@ public class Article {
 	private String regDate;
 	private int mid;
 	private int hit;
+	private int likeCnt;
 	
 	public Article() {
 		
 	}
 	
-	public Article(int id, String title, String body, int mid, String regDate, int hit) {
+	public Article(int id, String title, String body, int mid, String regDate, int hit, int likeCnt) {
 		this.id = id;
 		this.title = title;
 		this.body = body;
 		this.regDate = regDate;
 		this.mid = mid;
 		this.hit = hit;
+		this.likeCnt = likeCnt;
 	}
 	
+	public int getLikeCnt() {
+		return likeCnt;
+	}
+
+	public void setLikeCnt(int likeCnt) {
+		this.likeCnt = likeCnt;
+	}
+
 	public int getId() {
 		return id;
 	}
