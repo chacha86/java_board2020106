@@ -16,6 +16,16 @@ public class ArticleDao {
 		articles.add(a1);
 		articles.add(a2);
 		articles.add(a3);
+		
+		for(int i = 1; i <= 50 ; i++) {
+			Article a4 = new Article();
+			a4.setId(i);
+			a4.setTitle("제목" + i);
+			a4.setBody("내용" + i);
+			a4.setMid(1);
+			
+			articles.add(a4);
+		}
 	}
 
 	public void insertArticle(Article a) {
