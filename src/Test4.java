@@ -18,27 +18,31 @@ public class Test4 {
 		}
 		
 		Scanner sc = new Scanner(System.in);
-		int currentPageNo = 16; // 현재 페이지
+		int currentPageNo = 123; // 현재 페이지
 		int totalCntOfItems = articles.size(); // 전체 게시물 개수
 		int startPageNo = 1; // 시작 페이지 번호
 		int itemsCntPerPage = 3; // 페이지당 출력 게시물 개수
 		int pageCntPerBlock = 5; // 한 페이지 블록 당 페이지 개수
 		int endPageNo = (int)Math.ceil((double)totalCntOfItems / itemsCntPerPage); // 마지막 페이지 번호
-		int currentPageBlock = (int)Math.ceil((double)currentPageNo / pageCntPerBlock) ; // 현재 페이지 블록
 		
+		// 현재 페이지가 시작페이지보다 작으면 안됨
+		if (currentPageNo < startPageNo) {
+			currentPageNo = startPageNo;
+		}
+		// 현재 페이지가 마지막페이지보다 크면 안됨
+		if (currentPageNo > endPageNo) {
+			currentPageNo = endPageNo; 
+		}
+
+		
+		int currentPageBlock = (int)Math.ceil((double)currentPageNo / pageCntPerBlock) ; // 현재 페이지 블록
 		int startPageNoInBlock = (currentPageBlock - 1) * pageCntPerBlock + 1 ; // 현재 페이지 블록의 시작 페이지 번호
 		int endPageNoInBlock = startPageNoInBlock + pageCntPerBlock - 1;// // 현재 페이지 블록의 마지막 페이지 번호
 		
-		// 현재 페이지가 시작페이지보다 작으면 안됨
-		if (startPageNoInBlock < startPageNo) {
-			startPageNoInBlock = startPageNo;
+		// 페이지 번호가 마지막 페이지를 넘으면 안됨
+		if(endPageNoInBlock > endPageNo) {
+			endPageNoInBlock = endPageNo;
 		}
-		
-		// 현재 페이지가 마지막페이지보다 크면 안됨
-		if (endPageNoInBlock > endPageNo) {
-			endPageNoInBlock = endPageNo; 
-		}
-		
 		// 해당 페이지의 게시물 목록의 첫 인덱스
 		int startIndex = (currentPageNo - 1) * itemsCntPerPage;
 		
