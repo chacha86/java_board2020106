@@ -48,7 +48,7 @@ public class Test4 {
 		// 페이지의 마지막 인덱스가 저장소의 마지막 인덱스보다 크면 안됨
 		if(endIndex > totalCntOfItems) {
 			endIndex = totalCntOfItems;
-		}
+		} 
 		// 페이지별 게시물 출력
 		for(int i = startIndex; i < endIndex; i++) {
 			System.out.println("번호 : " + articles.get(i).getId());
